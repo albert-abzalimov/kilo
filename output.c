@@ -27,8 +27,9 @@ void editorRefreshScreen(void) {
   char buf[32];
   // the terminal is 1-indexed for cursor positions.. thats why we add + 1
 
+  // move cursor!
   snprintf(buf, sizeof(buf), "\x1b[%d;%dH", (E.cursor_y - E.row_offset) + 1,
-           E.cursor_x + 1);
+           (E.cursor_x - E.col_offset) + 1);
 
   abufAppend(&ab, buf, strlen(buf));
 
@@ -69,12 +70,13 @@ void editorDrawRows(struct abuf *ab) {
         abufAppend(ab, "~", 1);
       }
     } else {
-      int len = E.row[file_row].size;
+      int len = E.row[file_row].size - E.col_offset;
+      if (len < 0) len = 0;
       // truncate if its too long
       if (len > E.screen_cols) {
         len = E.screen_cols;
       }
-      abufAppend(ab, E.row[file_row].chars, len);
+      abufAppend(ab, &E.row[file_row].chars[E.col_offset], len);
     }
     // i forgot what these do. fuck.
     abufAppend(ab, "\x1b[K", 3);
@@ -96,5 +98,12 @@ void editorScroll(void) {
   // this shit is starting to make sense (cursor is below)
   if (E.cursor_y >= E.row_offset + E.screen_rows) {
     E.row_offset = E.cursor_y - E.screen_rows + 1;
+  }
+
+  if (E.cursor_x < E.col_offset) {
+    E.col_offset = E.cursor_x;
+  }
+  if (E.cursor_x >= E.col_offset + E.screen_cols) {
+    E.col_offset = E.cursor_x - E.screen_cols + 1;
   }
 }

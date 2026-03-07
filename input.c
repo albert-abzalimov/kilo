@@ -7,6 +7,7 @@
 
 
 void editorMoveCursor(int key) {
+  erow *row = (E.cursor_y >= E.num_rows) ? NULL : &E.row[E.cursor_y];
   switch (key) {
 
     case 'j':
@@ -29,8 +30,10 @@ void editorMoveCursor(int key) {
 
     case 'l':
     case ARROW_RIGHT:
-      if (E.cursor_x != E.screen_cols - 1)
+      // if row is valid, and our cursor is inside the row's size, then we can move
+      if (row && E.cursor_x < row->size) {
         E.cursor_x++;
+      }
       break;
   }
 }

@@ -31,6 +31,7 @@ void initEditor(void) {
 	E.cursor_x = 0;
 	E.cursor_y = 0;
 	E.row_offset = 0;
+	E.col_offset = 0;
 	E.num_rows = 0;
 	E.row = NULL;
 	
