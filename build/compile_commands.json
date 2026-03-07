@@ -1,0 +1,44 @@
+[
+{
+  "directory": "/mnt/c/Users/albab/cpp/kilo/build",
+  "command": "/usr/bin/cc    -Wall -Wextra -pedantic -std=gnu99 -o CMakeFiles/kilo.dir/kilo.c.o -c /mnt/c/Users/albab/cpp/kilo/kilo.c",
+  "file": "/mnt/c/Users/albab/cpp/kilo/kilo.c",
+  "output": "CMakeFiles/kilo.dir/kilo.c.o"
+},
+{
+  "directory": "/mnt/c/Users/albab/cpp/kilo/build",
+  "command": "/usr/bin/cc    -Wall -Wextra -pedantic -std=gnu99 -o CMakeFiles/kilo.dir/terminal.c.o -c /mnt/c/Users/albab/cpp/kilo/terminal.c",
+  "file": "/mnt/c/Users/albab/cpp/kilo/terminal.c",
+  "output": "CMakeFiles/kilo.dir/terminal.c.o"
+},
+{
+  "directory": "/mnt/c/Users/albab/cpp/kilo/build",
+  "command": "/usr/bin/cc    -Wall -Wextra -pedantic -std=gnu99 -o CMakeFiles/kilo.dir/input.c.o -c /mnt/c/Users/albab/cpp/kilo/input.c",
+  "file": "/mnt/c/Users/albab/cpp/kilo/input.c",
+  "output": "CMakeFiles/kilo.dir/input.c.o"
+},
+{
+  "directory": "/mnt/c/Users/albab/cpp/kilo/build",
+  "command": "/usr/bin/cc    -Wall -Wextra -pedantic -std=gnu99 -o CMakeFiles/kilo.dir/output.c.o -c /mnt/c/Users/albab/cpp/kilo/output.c",
+  "file": "/mnt/c/Users/albab/cpp/kilo/output.c",
+  "output": "CMakeFiles/kilo.dir/output.c.o"
+},
+{
+  "directory": "/mnt/c/Users/albab/cpp/kilo/build",
+  "command": "/usr/bin/cc    -Wall -Wextra -pedantic -std=gnu99 -o CMakeFiles/kilo.dir/append_buffer.c.o -c /mnt/c/Users/albab/cpp/kilo/append_buffer.c",
+  "file": "/mnt/c/Users/albab/cpp/kilo/append_buffer.c",
+  "output": "CMakeFiles/kilo.dir/append_buffer.c.o"
+},
+{
+  "directory": "/mnt/c/Users/albab/cpp/kilo/build",
+  "command": "/usr/bin/cc    -Wall -Wextra -pedantic -std=gnu99 -o CMakeFiles/kilo.dir/file.c.o -c /mnt/c/Users/albab/cpp/kilo/file.c",
+  "file": "/mnt/c/Users/albab/cpp/kilo/file.c",
+  "output": "CMakeFiles/kilo.dir/file.c.o"
+},
+{
+  "directory": "/mnt/c/Users/albab/cpp/kilo/build",
+  "command": "/usr/bin/cc    -Wall -Wextra -pedantic -std=gnu99 -o CMakeFiles/kilo.dir/row_operations.c.o -c /mnt/c/Users/albab/cpp/kilo/row_operations.c",
+  "file": "/mnt/c/Users/albab/cpp/kilo/row_operations.c",
+  "output": "CMakeFiles/kilo.dir/row_operations.c.o"
+}
+]

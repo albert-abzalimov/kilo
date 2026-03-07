@@ -1,0 +1,1 @@
+/usr/bin/cc  -Wall -Wextra -pedantic CMakeFiles/kilo.dir/kilo.c.o CMakeFiles/kilo.dir/terminal.c.o CMakeFiles/kilo.dir/input.c.o CMakeFiles/kilo.dir/output.c.o CMakeFiles/kilo.dir/append_buffer.c.o CMakeFiles/kilo.dir/file.c.o CMakeFiles/kilo.dir/row_operations.c.o -o kilo 
