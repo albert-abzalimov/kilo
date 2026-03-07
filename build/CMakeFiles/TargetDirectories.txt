@@ -1,3 +1,0 @@
-/mnt/c/Users/albab/cpp/kilo/build/CMakeFiles/kilo.dir
-/mnt/c/Users/albab/cpp/kilo/build/CMakeFiles/edit_cache.dir
-/mnt/c/Users/albab/cpp/kilo/build/CMakeFiles/rebuild_cache.dir
