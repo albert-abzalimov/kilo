@@ -40,7 +40,7 @@ void editorMoveCursor(int key) {
       break;
   }
 
-  /// Clamp cursor if we moved out of bounds 
+  // Clamp cursor if we moved out of bounds 
   // lets check if our cursor is in a valid position
   row = (E.cursor_y >= E.num_rows) ? NULL : &E.row[E.cursor_y];
   int row_len = row ? row->size : 0;
