@@ -29,6 +29,12 @@ void editorMoveCursor(int key) {
     case ARROW_LEFT:
       if (E.cursor_x != 0)
         E.cursor_x--;
+      else if (E.cursor_y > 0) {
+        E.cursor_y--;
+        // although this is not the proper place where it should be,
+        // our thing after this switch() statement fixes that!
+        E.cursor_x = E.row[E.cursor_y].size;
+      }
       break;
 
     case 'l':
@@ -36,6 +42,10 @@ void editorMoveCursor(int key) {
       // if row is valid, and our cursor is inside the row's size, then we can move
       if (row && E.cursor_x < row->size) {
         E.cursor_x++;
+      } else if (row && E.cursor_x == row -> size) {
+        // we do not need to worry about the last line because row would be false
+        E.cursor_y++;
+        E.cursor_x = 0;
       }
       break;
   }
