@@ -7,6 +7,9 @@
 
 
 void editorMoveCursor(int key) {
+  // why null?
+  // "since E.cursor_y is allowed to be one past the last line of the file"
+  // we check to see if it is in an actual line
   erow *row = (E.cursor_y >= E.num_rows) ? NULL : &E.row[E.cursor_y];
   switch (key) {
 
@@ -35,6 +38,14 @@ void editorMoveCursor(int key) {
         E.cursor_x++;
       }
       break;
+  }
+
+  /// Clamp cursor if we moved out of bounds 
+  // lets check if our cursor is in a valid position
+  row = (E.cursor_y >= E.num_rows) ? NULL : &E.row[E.cursor_y];
+  int row_len = row ? row->size : 0;
+  if (E.cursor_x > row_len) {
+    E.cursor_x = row_len;
   }
 }
 
