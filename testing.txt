@@ -10,7 +10,7 @@
 // defines a macro that bitwise ANDS with the value 0x1f, which is 00011111
 // in ASCII, Ctrl keys simply zero out the first 3 bits
 #define CTRL_KEY(k) ((k) & 0x1f)
-#define KILO_TAB_STOP 4
+#define KILO_TAB_STOP 8
 
 #define KILO_VERSION "0.0.1"
 

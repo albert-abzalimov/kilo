@@ -70,13 +70,13 @@ void editorDrawRows(struct abuf *ab) {
         abufAppend(ab, "~", 1);
       }
     } else {
-      int len = E.row[file_row].size - E.col_offset;
+      int len = E.row[file_row].render_size - E.col_offset;
       if (len < 0) len = 0;
       // truncate if its too long
       if (len > E.screen_cols) {
         len = E.screen_cols;
       }
-      abufAppend(ab, &E.row[file_row].chars[E.col_offset], len);
+      abufAppend(ab, &E.row[file_row].render[E.col_offset], len);
     }
     // i forgot what these do. fuck.
     abufAppend(ab, "\x1b[K", 3);
