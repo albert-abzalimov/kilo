@@ -4,6 +4,7 @@
 #ifndef KILO_CONFIG_H
 #define KILO_CONFIG_H
 
+#include <stdint.h>
 #include <termios.h>
 
 
@@ -30,19 +31,20 @@ enum editorKey {
 // row of text
 
 typedef struct erow {
-	int size;
-	int render_size;
+	int32_t size;
+	int32_t render_size;
 	char *chars;
 	char *render;
 } erow;
 
 struct EditorConfig {
-	int cursor_x, cursor_y;
-	int row_offset;
-	int col_offset;
-	int screen_rows;
-	int screen_cols;
-	int num_rows;
+	int32_t cursor_x, cursor_y;
+	int32_t render_x; // an index int32_to the row.render[]
+	int32_t row_offset;
+	int32_t col_offset;
+	int32_t screen_rows;
+	int32_t screen_cols;
+	int32_t num_rows;
 	erow *row;
 	struct termios original_termios;
 };

@@ -84,9 +84,18 @@ void editorProcessKeypress(void) {
 
     case PAGE_DOWN:
     case PAGE_UP:
-      // we need to create this code block because
-      // You can’t declare variables directly inside a switch statement.
+      // instead of moving cursor, just set the variable!
       {
+        if (c == PAGE_UP) {
+          E.cursor_y = E.row_offset;
+        }
+        else if (c == PAGE_DOWN) {
+          E.cursor_y = E.row_offset + E.screen_cols + 1;
+          if (E.cursor_y > E.num_rows) {
+            E.cursor_y = E.num_rows;
+          }
+        }
+
         int times = E.screen_rows;
         while (times--) {
           editorMoveCursor(c == PAGE_UP ? ARROW_UP : ARROW_DOWN);
@@ -97,6 +106,9 @@ void editorProcessKeypress(void) {
     case DEL_KEY:
       // we shall do this later!
       // TODO
+      if (E.cursor_x > 0) {
+        E.cursor_x--;
+      }
       break;
   }
 }

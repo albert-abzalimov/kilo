@@ -1,6 +1,7 @@
 #include "output.h"
 #include "append_buffer.h"
 #include "config.h"
+#include <stdint.h>
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
@@ -29,7 +30,7 @@ void editorRefreshScreen(void) {
 
   // move cursor!
   snprintf(buf, sizeof(buf), "\x1b[%d;%dH", (E.cursor_y - E.row_offset) + 1,
-           (E.cursor_x - E.col_offset) + 1);
+           (E.render_x - E.col_offset) + 1);
 
   abufAppend(&ab, buf, strlen(buf));
 
@@ -87,7 +88,15 @@ void editorDrawRows(struct abuf *ab) {
 }
 
 
+/// Runs every refresh frame
 void editorScroll(void) {
+
+  E.render_x = 0;
+  // why is cursor_y < E.num_rows
+  // OH BECAUSE CURSOR_Y IS ALLOWED TO BE at the end of the file
+  if (E.cursor_y < E.num_rows) {
+    E.render_x = editorRowCursorXToRenderX(&E.row[E.cursor_y], E.cursor_x);
+  }
   // scroll up
   // this is the scenario where our cursor is above our visible window
   if (E.cursor_y < E.row_offset) {
@@ -100,10 +109,30 @@ void editorScroll(void) {
     E.row_offset = E.cursor_y - E.screen_rows + 1;
   }
 
-  if (E.cursor_x < E.col_offset) {
-    E.col_offset = E.cursor_x;
+  if (E.render_x < E.col_offset) {
+    E.col_offset = E.render_x;
   }
-  if (E.cursor_x >= E.col_offset + E.screen_cols) {
-    E.col_offset = E.cursor_x - E.screen_cols + 1;
+  if (E.render_x >= E.col_offset + E.screen_cols) {
+    E.col_offset = E.render_x - E.screen_cols + 1;
   }
 }
+
+int32_t editorRowCursorXToRenderX(erow *row, int cursor_x) {
+  // okay lets find
+  int32_t render_x = 0;
+  for (int i = 0; i < cursor_x; i++) {
+    if (row->chars[i] == '\t') {
+      // how many spaces are we to the right of the previous tab_stop?
+      int32_t remainder = render_x % KILO_TAB_STOP;
+      // how many spaces are we to the left of the next tab_stop?
+      int32_t until_next_without_1 = KILO_TAB_STOP - 1 - remainder;
+      render_x += until_next_without_1;
+    }
+    // since this always runs, we go one before the next tab_stop
+    render_x++;
+  }
+
+  return render_x;
+}
+// _ _ _ t _
+// 0 0 0 0 0 
