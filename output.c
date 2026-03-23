@@ -1,6 +1,7 @@
 #include "output.h"
 #include "append_buffer.h"
 #include "config.h"
+#include <stdarg.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
@@ -24,6 +25,7 @@ void editorRefreshScreen(void) {
 
   editorScroll();
   editorDrawRows(&ab);
+  editorDrawStatusBar(&ab);
 
   char buf[32];
   // the terminal is 1-indexed for cursor positions.. thats why we add + 1
@@ -42,8 +44,7 @@ void editorRefreshScreen(void) {
 }
 
 void editorDrawRows(struct abuf *ab) {
-
-  for (int y = 0; y < E.screen_rows - 1; y++) {
+  for (int y = 0; y < E.screen_rows; y++) {
     int file_row = y + E.row_offset;
     // if visible in our screen? i am assuming?
     if (file_row >= E.num_rows) {
@@ -83,8 +84,48 @@ void editorDrawRows(struct abuf *ab) {
     abufAppend(ab, "\x1b[K", 3);
     abufAppend(ab, "\r\n", 2);
   }
-  abufAppend(ab, "~", 1);
-  abufAppend(ab, "\x1b[K", 3);
+}
+
+void editorDrawStatusBar(struct abuf *ab) {
+  /*
+The m command (Select Graphic Rendition) causes the text printed after it to be printed with various possible attributes including bold (1), underscore (4), blink (5), and inverted colors (7). For example, you could specify all of these attributes using the command <esc>[1;4;5;7m. An argument of 0 clears all attributes, and is the default argument, so we use <esc>[m to go back to normal text formatting.   */
+  abufAppend(ab, "\x1b[7m", 4);
+
+  char status[80], right_status[80];
+
+  int len = snprintf(status, sizeof(status), "%.20s - %d lines", E.file_name, E.num_rows);
+
+  int right_len = snprintf(right_status, sizeof(right_status), "%d:%d", E.cursor_y + 1, E.cursor_x);
+
+  if (len > E.screen_cols) len = E.screen_cols;
+
+  abufAppend(ab, status, len);
+
+  while (len < E.screen_cols) {
+    if (right_len == E.screen_cols - len) {
+      abufAppend(ab, right_status, right_len);
+      break;
+    }
+    abufAppend(ab, " ", 1);
+    len++;
+  }
+
+  abufAppend(ab, "\x1b[m", 3);
+}
+
+// the ... is a variadic function
+void editorSetStatusMessage(const char *fmt, ...) {
+  // ap?
+  // in order to retrieve these variable length arguements we use va_list;
+  // so we call our argument list
+  va_list argument_list;
+  va_start(argument_list, fmt);
+  // helps make our own printf style function
+  vsnprintf(E.status_message, sizeof(E.status_message), fmt, argument_list);
+  va_end(argument_list);
+  // time(NULL) returns time
+  E.status_message_time = time(NULL);
+
 }
 
 

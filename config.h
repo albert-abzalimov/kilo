@@ -6,6 +6,7 @@
 
 #include <stdint.h>
 #include <termios.h>
+#include <time.h>
 
 
 // defines a macro that bitwise ANDS with the value 0x1f, which is 00011111
@@ -46,6 +47,9 @@ struct EditorConfig {
 	int32_t screen_cols;
 	int32_t num_rows;
 	erow *row;
+	char *file_name;
+	char status_message[80];
+	time_t status_message_time;
 	struct termios original_termios;
 };
 

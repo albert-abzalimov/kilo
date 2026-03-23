@@ -3,6 +3,11 @@
 #include <stdlib.h>
 
 
+/**
+* 
+  * appends a str of a length to our buffer using mempcpy
+  * @param ab the buffer
+**/ 
 void abufAppend(struct abuf *ab, const char *str, int length) {
 
   // reallocate enough memory into our buffer with the new length

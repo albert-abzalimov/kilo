@@ -16,6 +16,10 @@ void editorScroll(void);
 
 int editorRowCursorXToRenderX(erow*, int);
 
+void editorDrawStatusBar(struct abuf *);
+
+void editorSetStatusMessage(const char* fmt, ...);
+
 extern struct abuf ab;
 
 #endif

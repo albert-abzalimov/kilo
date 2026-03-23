@@ -11,6 +11,9 @@
 // eventually will be reading a file
 void editorOpen(char *filename) {
 
+  free(E.file_name);
+  E.file_name = strdup(filename);
+
   // opens a file
   FILE *fp = fopen(filename, "r");
   // catch error

@@ -1,3 +1,4 @@
+#include <string.h>
 #define _DEFUALT_SOURCE
 
 #include <unistd.h>
@@ -35,11 +36,24 @@ void initEditor(void) {
 	E.col_offset = 0;
 	E.num_rows = 0;
 	E.row = NULL;
-	
+	E.status_message[0] = '\0';
+	E.status_message_time = 0;
+	E.file_name = malloc(10 * sizeof(char));	
+	if (E.file_name == NULL) {
+		// uhoh!
+		die("insufficent memory, file_name malloc");
+	}
+	strcpy(E.file_name, "[No Name]");
+
+	// or i could actually write:
+	// E.file_name = strdup("[No Name]");
+	// if (E.file_name == NULL) die!!!
 	
 	if (getWindowSize(&E.screen_rows, &E.screen_cols) == -1) {
 		die("get window size failed....");
 	}
+
+	E.screen_rows--;
 	
 }
 
@@ -53,6 +67,8 @@ int main(int32_t argc, char *argv[]) {
 	if (argc >= 2) {
 		editorOpen(argv[1]);
 	}
+
+	editorSetStatusMessage("HELP: Ctrl-Q to quit");
 
 	while (1) {
 		editorRefreshScreen();
