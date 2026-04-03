@@ -17,6 +17,7 @@ void editorScroll(void);
 int editorRowCursorXToRenderX(erow*, int);
 
 void editorDrawStatusBar(struct abuf *);
+void editorDrawMessageBar(struct abuf *);
 
 void editorSetStatusMessage(const char* fmt, ...);
 

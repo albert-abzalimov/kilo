@@ -53,7 +53,8 @@ void initEditor(void) {
 		die("get window size failed....");
 	}
 
-	E.screen_rows--;
+	// this is because we need the status bar and such
+	E.screen_rows -= 2;
 	
 }
 

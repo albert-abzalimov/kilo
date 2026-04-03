@@ -5,6 +5,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
 #include <unistd.h>
 
 void editorRefreshScreen(void) {
@@ -26,6 +27,7 @@ void editorRefreshScreen(void) {
   editorScroll();
   editorDrawRows(&ab);
   editorDrawStatusBar(&ab);
+  editorDrawMessageBar(&ab);
 
   char buf[32];
   // the terminal is 1-indexed for cursor positions.. thats why we add + 1
@@ -111,6 +113,21 @@ The m command (Select Graphic Rendition) causes the text printed after it to be 
   }
 
   abufAppend(ab, "\x1b[m", 3);
+  abufAppend(ab, "\r\n", 2);
+}
+
+void editorDrawMessageBar(struct abuf * ab) {
+  // clears the message bar
+  abufAppend(ab, "\x1b[K", 3);
+
+  // get msg len and clamp
+  int message_len = strlen(E.status_message);
+  if (message_len > E.screen_cols)
+    message_len = E.screen_cols;
+
+  if (message_len != 0 && time(NULL) - E.status_message_time < 5) {
+    abufAppend(ab, E.status_message, message_len);
+  }
 }
 
 // the ... is a variadic function
